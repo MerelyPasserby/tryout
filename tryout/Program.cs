@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using tryout.Data;
+using tryout.Services;
 
 namespace tryout
 {
@@ -17,7 +18,7 @@ namespace tryout
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            builder.Services.AddScoped<DbService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
