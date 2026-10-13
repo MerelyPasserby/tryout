@@ -126,5 +126,14 @@ namespace tryout.Controllers
 
             return Ok();
         }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("error")]
+        public IActionResult HandleError()
+        {
+            return Problem(
+                statusCode: StatusCodes.Status500InternalServerError,
+                title: "An unexpected error occurred.");
+        }
     }
 }
