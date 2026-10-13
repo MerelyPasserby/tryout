@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using tryout.DTOs.Game;
 using tryout.DTOs.Genre;
 using tryout.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace tryout.Controllers
 {
@@ -12,10 +11,9 @@ namespace tryout.Controllers
     public class ApiController : ControllerBase
     {
         private readonly DbService _service;
-
         public ApiController(DbService service)
         {
-            _service = service;
+            _service = service;          
         }
 
         [HttpGet("games")]
@@ -26,8 +24,8 @@ namespace tryout.Controllers
             return Ok(games);
         }
 
-        [HttpGet("games/{id}")]
-        public async Task<ActionResult<GameResponseDto>> GetGame(int id)
+        [HttpGet("games/{id:int:min(1)}")]
+        public async Task<ActionResult<GameResponseDto>> GetGame([FromRoute] int id)
         {
             var game = await _service.GetGameByIdAsync(id);
 
@@ -53,9 +51,9 @@ namespace tryout.Controllers
             }
         }
 
-        [HttpPut("games/{id}")]
+        [HttpPut("games/{id:int:min(1)}")]
         public async Task<ActionResult<GameResponseDto>> UpdateGame(
-            int id,
+            [FromRoute] int id,
             [FromBody] GameUpdateDto dto)
         {
             var game = await _service.UpdateGameAsync(id, dto);
@@ -66,8 +64,8 @@ namespace tryout.Controllers
             return Ok(game);
         }
 
-        [HttpDelete("games/{id}")]
-        public async Task<IActionResult> DeleteGame(int id)
+        [HttpDelete("games/{id:int:min(1)}")]
+        public async Task<IActionResult> DeleteGame([FromRoute] int id)
         {
             var deleted = await _service.DeleteGameAsync(id);
 
@@ -85,8 +83,8 @@ namespace tryout.Controllers
             return Ok(genres);
         }
 
-        [HttpGet("genres/{id}")]
-        public async Task<ActionResult<GenreResponseDto>> GetGenre(int id)
+        [HttpGet("genres/{id:int:min(1)}")]
+        public async Task<ActionResult<GenreResponseDto>> GetGenre([FromRoute] int id)
         {
             var genre = await _service.GetGenreByIdAsync(id);
 
@@ -105,9 +103,9 @@ namespace tryout.Controllers
             return Ok(genre);
         }
 
-        [HttpPut("genres/{id}")]
+        [HttpPut("genres/{id:int:min(1)}")]
         public async Task<ActionResult<GenreResponseDto>> UpdateGenre(
-            int id,
+            [FromRoute] int id,
             [FromBody] GenreUpdateDto dto)
         {
             var genre = await _service.UpdateGenreAsync(id, dto);
@@ -118,8 +116,8 @@ namespace tryout.Controllers
             return Ok(genre);
         }
         
-        [HttpDelete("genres/{id}")]
-        public async Task<IActionResult> DeleteGenre(int id)
+        [HttpDelete("genres/{id:int:min(1)}")]
+        public async Task<IActionResult> DeleteGenre([FromRoute] int id)
         {
             var deleted = await _service.DeleteGenreAsync(id);
 
